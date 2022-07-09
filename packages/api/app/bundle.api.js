@@ -45530,9 +45530,12 @@ function init() {}
 function send(type, args) {// Nothing
 }
 
+function getNumClients() {}
+
 module.exports = {
   init,
-  send
+  send,
+  getNumClients
 };
 
 /***/ }),
@@ -53300,7 +53303,7 @@ async function doTransfer(categoryIds, transferId) {
   let _sheet$get$meta2 = _sheet__WEBPACK_IMPORTED_MODULE_0__["get"]().meta(),
       months = _sheet$get$meta2.createdMonths;
 
-  [...months].map(month => {
+  [...months].forEach(month => {
     let totalValue = categoryIds.map(id => {
       return _budget_actions__WEBPACK_IMPORTED_MODULE_8__["getBudget"]({
         month,
@@ -61887,11 +61890,15 @@ function unlisten() {
 /**
  * @fileoverview
  * @enhanceable
+ * @suppress {missingRequire} reports error on implicit type usages.
  * @suppress {messageConventions} JS Compiler reports an error if a variable or
  *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
+
+/* eslint-disable */
+// @ts-nocheck
 var jspb = __webpack_require__(/*! google-protobuf */ "./node_modules/google-protobuf/google-protobuf.js");
 
 var goog = jspb;
@@ -63548,6 +63555,8 @@ var config = {
   // Allow 5 minutes of clock drift
   maxDrift: 5 * 60 * 1000
 };
+const MAX_COUNTER = parseInt('0xFFFF');
+const MAX_NODE_LENGTH = 16;
 /**
  * timestamp instance class
  */
@@ -63641,7 +63650,7 @@ Timestamp.send = function () {
     throw new Timestamp.ClockDriftError(lNew, phys, config.maxDrift);
   }
 
-  if (cNew > 65535) {
+  if (cNew > MAX_COUNTER) {
     throw new Timestamp.OverflowError();
   } // repack the logical time/counter
 
@@ -63688,7 +63697,7 @@ Timestamp.recv = function (msg) {
     throw new Timestamp.ClockDriftError();
   }
 
-  if (cNew > 65535) {
+  if (cNew > MAX_COUNTER) {
     throw new Timestamp.OverflowError();
   } // repack the logical time/counter
 
@@ -63711,7 +63720,10 @@ Timestamp.parse = function (timestamp) {
       var millis = Date.parse(parts.slice(0, 3).join('-')).valueOf();
       var counter = parseInt(parts[3], 16);
       var node = parts[4];
-      if (!isNaN(millis) && !isNaN(counter)) return new Timestamp(millis, counter, node);
+
+      if (!isNaN(millis) && millis >= 0 && !isNaN(counter) && counter <= MAX_COUNTER && typeof node === 'string' && node.length <= MAX_NODE_LENGTH) {
+        return new Timestamp(millis, counter, node);
+      }
     }
   }
 

@@ -4,4 +4,6 @@ function send(type, args) {
   // Nothing
 }
 
-module.exports = { init, send };
+function getNumClients() {}
+
+module.exports = { init, send, getNumClients };
