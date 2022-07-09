@@ -1,15 +1,15 @@
 {
-  "name": "actual",
-  "version": "0.0.1",
+  "name": "@lancepick/actual-app-web",
+  "version": "0.0.2",
   "private": true,
   "description": "A local-first personal finance system",
-  "homepage": "https://github.com/actualbudget/actual/",
+  "homepage": "https://github.com/lancepick/actual/",
   "bugs": {
-    "url": "https://github.com/actualbudget/actual/issues/"
+    "url": "https://github.com/lancepick/actual/issues/"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:actualbudget/actual.git"
+    "url": "git@github.com:lancepick/actual.git"
   },
   "license": "MIT",
   "workspaces": {
